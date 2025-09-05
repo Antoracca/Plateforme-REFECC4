@@ -1,0 +1,266 @@
+/* FICHIER DE CORRECTION POUR LA PRODUCTION - A inclure après style.css */
+/* Forces les styles de la section équipe pour éviter les optimisations serveur */
+
+/* Version équipe ultra-renforcée pour production */
+#equipe {
+  background: #f8fafc !important;
+  position: relative !important;
+  padding: 60px 0 !important;
+  overflow: hidden !important;
+}
+
+#equipe::before {
+  content: '' !important;
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  background: radial-gradient(circle at 50% 30%, rgba(34,197,94,0.08), transparent) !important;
+  pointer-events: none !important;
+  z-index: 1 !important;
+}
+
+#equipe .wrap {
+  position: relative !important;
+  z-index: 2 !important;
+}
+
+.team-leader {
+  max-width: 1200px !important;
+  margin: 0 auto !important;
+  padding: 0 20px !important;
+}
+
+.leader-card {
+  position: relative !important;
+  background: #ffffff !important;
+  border-radius: 20px !important;
+  overflow: hidden !important;
+  box-shadow: 0 20px 50px rgba(0,0,0,0.1), 0 8px 25px rgba(34,197,94,0.15) !important;
+  border: 1px solid rgba(34,197,94,0.1) !important;
+  transition: all 0.3s ease !important;
+  display: flex !important;
+  align-items: stretch !important;
+  min-height: 400px !important;
+}
+
+.leader-card:hover {
+  transform: translateY(-5px) !important;
+  box-shadow: 0 30px 70px rgba(0,0,0,0.15), 0 12px 35px rgba(34,197,94,0.2) !important;
+}
+
+.leader-image {
+  flex: 1 !important;
+  position: relative !important;
+  overflow: hidden !important;
+  min-height: 400px !important;
+}
+
+.leader-photo {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  object-position: center !important;
+  transition: transform 0.3s ease !important;
+}
+
+.leader-card:hover .leader-photo {
+  transform: scale(1.05) !important;
+}
+
+.leader-info {
+  flex: 1 !important;
+  padding: 40px !important;
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: center !important;
+  background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(248,250,252,0.95)) !important;
+}
+
+.leader-name {
+  font-size: 2.2rem !important;
+  font-weight: 800 !important;
+  color: #1f2937 !important;
+  margin-bottom: 8px !important;
+  line-height: 1.2 !important;
+}
+
+.leader-title {
+  font-size: 1.1rem !important;
+  color: #16a34a !important;
+  font-weight: 600 !important;
+  margin-bottom: 20px !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.5px !important;
+}
+
+.leader-description {
+  font-size: 1.1rem !important;
+  line-height: 1.6 !important;
+  color: #4b5563 !important;
+  margin-bottom: 20px !important;
+}
+
+.leader-mission {
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+  color: #6b7280 !important;
+}
+
+/* VERSION MOBILE ULTRA-RENFORCÉE */
+@media screen and (max-width: 768px) {
+  #equipe {
+    padding: 40px 0 !important;
+    background: linear-gradient(145deg, #f8fafc, #ffffff) !important;
+  }
+  
+  .leader-card {
+    flex-direction: column !important;
+    margin: 0 15px !important;
+    min-height: auto !important;
+    border-radius: 25px !important;
+    background: linear-gradient(145deg, rgba(255,255,255,0.98), rgba(248,250,252,0.95)) !important;
+    box-shadow: 
+      0 25px 60px rgba(0,0,0,0.1) !important,
+      0 8px 30px rgba(34,197,94,0.15) !important !important;
+  }
+  
+  .leader-image {
+    height: 280px !important;
+    min-height: 280px !important;
+    border-radius: 25px 25px 0 0 !important;
+  }
+  
+  .leader-photo {
+    border-radius: 25px 25px 0 0 !important;
+  }
+  
+  .leader-info {
+    padding: 25px 25px 30px !important;
+    text-align: center !important;
+    background: transparent !important;
+  }
+  
+  .leader-name {
+    font-size: 1.7rem !important;
+    text-align: center !important;
+  }
+  
+  .leader-title {
+    text-align: center !important;
+    font-size: 0.9rem !important;
+    font-weight: 700 !important;
+  }
+  
+  .leader-description {
+    text-align: center !important;
+    font-size: 1rem !important;
+    margin-bottom: 15px !important;
+  }
+  
+  .leader-mission {
+    text-align: center !important;
+    font-size: 0.95rem !important;
+  }
+  
+  /* Effet de halo pour mobile */
+  .leader-card::before {
+    content: '' !important;
+    position: absolute !important;
+    top: -20px !important;
+    left: -20px !important;
+    right: -20px !important;
+    bottom: -20px !important;
+    background: radial-gradient(circle, rgba(34,197,94,0.12), transparent 70%) !important;
+    border-radius: 35px !important;
+    z-index: -1 !important;
+    opacity: 0.6 !important;
+  }
+  
+  .leader-card:hover {
+    transform: translateY(-8px) !important;
+    box-shadow: 
+      0 35px 80px rgba(0,0,0,0.12) !important,
+      0 12px 40px rgba(34,197,94,0.2) !important,
+      0 4px 15px rgba(0,0,0,0.08) !important;
+  }
+}
+
+/* CRITÈRES ET AVANTAGES - Effets 3D renforcés */
+.card {
+  transform-style: preserve-3d !important;
+  transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+}
+
+.card:hover {
+  transform: translateY(-20px) rotateX(15deg) rotateY(-5deg) scale(1.02) !important;
+  box-shadow: 
+    0 35px 60px rgba(22,163,74,0.25) !important,
+    0 15px 30px rgba(0,0,0,0.1) !important,
+    0 5px 15px rgba(34,197,94,0.1) !important;
+}
+
+.benefit:hover {
+  transform: translateY(-12px) scale(1.05) !important;
+  box-shadow: 0 20px 40px rgba(22,163,74,0.2) !important;
+}
+
+/* FAQ - Glassmorphisme renforcé */
+details {
+  background: rgba(255,255,255,0.85) !important;
+  border: 1px solid rgba(34,197,94,0.15) !important;
+  backdrop-filter: blur(10px) !important;
+  -webkit-backdrop-filter: blur(10px) !important;
+}
+
+details:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 32px rgba(34,197,94,0.12) !important;
+}
+
+/* BOUTON STICKY APPLY - CORRECTION FORCE TOTALE */
+.sticky-apply {
+  position: fixed !important;
+  right: 18px !important;
+  bottom: 18px !important;
+  background: linear-gradient(90deg, #16a34a, #22c55e) !important;
+  color: #ffffff !important;
+  border-radius: 999px !important;
+  padding: 12px 16px !important;
+  font-weight: 700 !important;
+  box-shadow: 0 4px 20px rgba(22,163,74,0.4) !important;
+  z-index: 999 !important;
+  transition: transform 0.2s ease !important;
+  text-decoration: none !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  /* Réinitialisation complète pour éviter les conflits */
+  transform: none !important;
+  transform-style: flat !important;
+  -webkit-transform-style: flat !important;
+  perspective: none !important;
+  backface-visibility: visible !important;
+  margin: 0 !important;
+  top: auto !important;
+  left: auto !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.sticky-apply:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 6px 25px rgba(22,163,74,0.5) !important;
+}
+
+.sticky-apply span {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+/* FORCER L'AFFICHAGE DU DESIGN COMPLET UNIQUEMENT POUR LES CARTES */
+.card, .benefit, .leader-card {
+  -webkit-transform-style: preserve-3d !important;
+  transform-style: preserve-3d !important;
+}

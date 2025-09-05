@@ -1,16 +1,72 @@
-/* Menu toggle (mobile) */
-const menuToggle=document.getElementById('menuToggle');
-const nav=document.querySelector('.nav');
-menuToggle?.addEventListener('click',()=>{
-  nav?.classList.toggle('open');
-  menuToggle?.classList.toggle('active');
+/* Menu hamburger simple et efficace */
+const menuToggle = document.getElementById('menuToggle');
+const nav = document.querySelector('.nav');
+const body = document.body;
+
+// Créer l'overlay
+const overlay = document.createElement('div');
+overlay.className = 'menu-overlay';
+document.body.appendChild(overlay);
+
+// Fonction pour ouvrir le menu
+function openMenu() {
+  nav?.classList.add('open');
+  menuToggle?.classList.add('active');
+  overlay.style.opacity = '1';
+  overlay.style.visibility = 'visible';
+  body.style.overflow = 'hidden';
+  
+  // S'assurer que le bouton sticky reste visible
+  const stickyBtn = document.querySelector('.sticky-apply');
+  if (stickyBtn) {
+    stickyBtn.style.display = 'block';
+    stickyBtn.style.visibility = 'visible';
+    stickyBtn.style.zIndex = '9999';
+  }
+}
+
+// Fonction pour fermer le menu
+function closeMenu() {
+  nav?.classList.remove('open');
+  menuToggle?.classList.remove('active');
+  overlay.style.opacity = '0';
+  overlay.style.visibility = 'hidden';
+  body.style.overflow = '';
+}
+
+// Toggle du menu
+menuToggle?.addEventListener('click', (e) => {
+  e.preventDefault();
+  if (nav?.classList.contains('open')) {
+    closeMenu();
+  } else {
+    openMenu();
+  }
 });
-/* Fermer menu en cliquant sur un lien */
+
+// Fermer menu en cliquant sur l'overlay
+overlay.addEventListener('click', closeMenu);
+
+// Fermer menu en cliquant sur un lien
 nav?.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', () => {
-    nav.classList.remove('open');
-    menuToggle?.classList.remove('active');
+  link.addEventListener('click', (e) => {
+    // Fermer le menu immédiatement pour permettre la navigation
+    closeMenu();
   });
+});
+
+// Fermer menu avec la touche Escape
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && nav?.classList.contains('open')) {
+    closeMenu();
+  }
+});
+
+// Fermer menu au redimensionnement
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 900 && nav?.classList.contains('open')) {
+    closeMenu();
+  }
 });
 /* Preloader fade */
 window.addEventListener('load',()=>{const p=document.getElementById('preloader');if(p){p.style.opacity='0';setTimeout(()=>p.remove(),600);}});
@@ -64,8 +120,21 @@ const io=new IntersectionObserver((entries)=>{entries.forEach(entry=>{if(entry.i
 reveals.forEach(el=>io.observe(el));
 /* Parallax media */
 document.querySelectorAll('.parallax').forEach(el=>{const onScroll=()=>{const rect=el.getBoundingClientRect();const seen=Math.min(1,Math.max(0,1-Math.abs(rect.top+rect.height/2-window.innerHeight/2)/(window.innerHeight/2)));el.style.transform=`translateY(${(1-seen)*-14}px)`;};window.addEventListener('scroll',onScroll,{passive:true});onScroll();});
-/* Smooth anchor scrolling */
-document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const target=document.querySelector(a.getAttribute('href'));if(target){e.preventDefault();const top=target.getBoundingClientRect().top+window.scrollY-70;window.scrollTo({top,behavior:'smooth'});}});});
+/* Smooth anchor scrolling - DÉSACTIVÉ POUR TEST */
+/*
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',e=>{
+    const href = a.getAttribute('href');
+    const target = document.querySelector(href);
+    if(target){
+      e.preventDefault();
+      const top = target.getBoundingClientRect().top + window.scrollY - 80;
+      window.scrollTo({top, behavior:'smooth'});
+      console.log('Navigation vers:', href);
+    }
+  });
+});
+*/
 /* Form client‑side niceties */
 const form=document.querySelector('form[name="candidature"]');
 form?.addEventListener('submit',()=>{const btn=form.querySelector('button[type="submit"]');if(btn){btn.disabled=true;btn.textContent='Envoi…';}});
@@ -80,4 +149,63 @@ document.addEventListener('DOMContentLoaded', () => {
   };
   setSafeTop();
   window.addEventListener('resize', setSafeTop);
+  
+  // Correction mobile : empêcher le scroll automatique vers #programme
+  if (window.innerWidth <= 768) {
+    // Forcer le scroll vers le haut au chargement sur mobile
+    setTimeout(() => {
+      window.scrollTo(0, 0);
+      // Supprimer tout hash de l'URL
+      if (window.location.hash) {
+        history.replaceState(null, null, window.location.pathname);
+      }
+    }, 100);
+    
+    // Forcer la visibilité du bouton sticky sur mobile
+    const forceStickyButton = () => {
+      const stickyBtn = document.querySelector('.sticky-apply');
+      if (stickyBtn) {
+        stickyBtn.style.position = 'fixed';
+        stickyBtn.style.right = '15px';
+        stickyBtn.style.bottom = '15px';
+        stickyBtn.style.zIndex = '9999';
+        stickyBtn.style.display = 'flex';
+        stickyBtn.style.visibility = 'visible';
+        stickyBtn.style.opacity = '1';
+        stickyBtn.style.transform = 'none';
+        stickyBtn.style.transformStyle = 'flat';
+        stickyBtn.style.perspective = 'none';
+        stickyBtn.style.margin = '0';
+        stickyBtn.style.top = 'auto';
+        stickyBtn.style.left = 'auto';
+      }
+    };
+    
+    setTimeout(forceStickyButton, 200);
+    // Forcer toutes les 500ms pour s'assurer
+    setInterval(forceStickyButton, 500);
+  } else {
+    // Correction desktop aussi
+    const forceStickyButton = () => {
+      const stickyBtn = document.querySelector('.sticky-apply');
+      if (stickyBtn) {
+        stickyBtn.style.position = 'fixed';
+        stickyBtn.style.right = '18px';
+        stickyBtn.style.bottom = '18px';
+        stickyBtn.style.zIndex = '9999';
+        stickyBtn.style.display = 'flex';
+        stickyBtn.style.visibility = 'visible';
+        stickyBtn.style.opacity = '1';
+        stickyBtn.style.transform = 'none';
+        stickyBtn.style.transformStyle = 'flat';
+        stickyBtn.style.perspective = 'none';
+        stickyBtn.style.margin = '0';
+        stickyBtn.style.top = 'auto';
+        stickyBtn.style.left = 'auto';
+      }
+    };
+    
+    setTimeout(forceStickyButton, 200);
+    setInterval(forceStickyButton, 1000);
+  }
 });
