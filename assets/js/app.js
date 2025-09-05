@@ -21,9 +21,24 @@ const heroSwiper=new Swiper('.hero-swiper',{effect:'fade',loop:true,speed:1200,a
 function typeWriter(element, text, speed = 100) {
   let i = 0;
   element.innerHTML = '';
+  
   function type() {
     if (i < text.length) {
-      element.innerHTML += text.charAt(i);
+      let currentText = text.substring(0, i + 1);
+      
+      // Vérifier si on a écrit "Climat" (même partiellement)
+      if (currentText.toLowerCase().includes('climat')) {
+        // Trouver la position du mot "Climat" dans le texte
+        const climatIndex = text.toLowerCase().indexOf('climat');
+        if (i >= climatIndex + 5) { // Si on a écrit tout le mot "Climat"
+          const beforeClimat = text.substring(0, climatIndex);
+          const afterClimat = text.substring(climatIndex + 6);
+          const writtenAfter = afterClimat.substring(0, i - climatIndex - 5);
+          currentText = beforeClimat + '<span class="climat-highlight">Climat</span>' + writtenAfter;
+        }
+      }
+      
+      element.innerHTML = currentText;
       i++;
       setTimeout(type, speed);
     }
@@ -56,3 +71,13 @@ const form=document.querySelector('form[name="candidature"]');
 form?.addEventListener('submit',()=>{const btn=form.querySelector('button[type="submit"]');if(btn){btn.disabled=true;btn.textContent='Envoi…';}});
 /* Respect reduced motion */
 if(window.matchMedia('(prefers-reduced-motion: reduce)').matches){if(heroSwiper?.autoplay)heroSwiper.autoplay.stop();if(portraitsSwiper?.autoplay)portraitsSwiper.autoplay.stop();}
+document.addEventListener('DOMContentLoaded', () => {
+  const header = document.querySelector('.site-header');
+  const setSafeTop = () => {
+    if (!header) return;
+    const h = header.offsetHeight;
+    document.documentElement.style.setProperty('--safeTop', h + 'px');
+  };
+  setSafeTop();
+  window.addEventListener('resize', setSafeTop);
+});
